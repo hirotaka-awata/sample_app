@@ -65,3 +65,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "jquery-rails" , '4.3.3'
+
+gem 'faker',          '1.9.1'
+
+gem 'will_paginate',           '3.1.6'
+gem 'bootstrap-will_paginate', '1.0.0'
