@@ -33,6 +33,7 @@ class User < ApplicationRecord
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
+    #https://github.com/codahale/bcrypt-ruby/blob/master/lib/bcrypt/password.rb
   end
 
 # ユーザーのログイン情報を破棄する
@@ -64,5 +65,3 @@ class User < ApplicationRecord
     self.activation_digest = User.digest(activation_token)
   end
 end
-
-
