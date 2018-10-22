@@ -30,10 +30,11 @@ class User < ApplicationRecord
 
   # トークンがダイジェストと一致したらtrueを返す
   def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
+    digest = send("#{attribute}_digest")  # sendメソッドの対象は？user
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
-    #https://github.com/codahale/bcrypt-ruby/blob/master/lib/bcrypt/password.rb
+    # https://github.com/codahale/bcrypt-ruby/blob/master/lib/bcrypt/password.rb
+    # https://www.rubydoc.info/github/codahale/bcrypt-ruby/BCrypt/Password#create-class_method
   end
 
 # ユーザーのログイン情報を破棄する
