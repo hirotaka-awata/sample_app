@@ -3,7 +3,7 @@ class MicropostsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def create
-     @micropost = current_user.microposts.build(micropost_params)
+     @micropost = current_user.microposts.build(micropost_params) #buildはnewと同じ。慣習としてモデルを扱う際はbuildを用いる
      if @micropost.save
        flash[:success] = "Micropost created!"
        redirect_to root_url

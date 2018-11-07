@@ -88,8 +88,8 @@ class User < ApplicationRecord
   end
 
   # ユーザーをフォローする
-  def follow(other_user)
-     following << other_user
+   def follow(other_user)
+     following << other_user    # followiong配列の最後にother_userを追加 #followingは関連付けに関連付けにより使用できる
    end
 
    # ユーザーをフォロー解除する
