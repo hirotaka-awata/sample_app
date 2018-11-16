@@ -50,8 +50,8 @@ class UsersController < ApplicationController
 
   def following
     @title = "Following"
-    @user  = User.find(params[:id])
-    @users = @user.following.paginate(page: params[:page])
+    @user  = User.find(params[:id])                          #URLにて送信されたパラメータ
+    @users = @user.following.paginate(page: params[:page])   #pagenateと[:page]に入っている数字を調べる：デフォルトで30
     render 'show_follow'
   end
 

@@ -1,12 +1,12 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
   has_many :active_relationships,  class_name:  "Relationship",
-                                   foreign_key: "follower_id",
-                                   dependent:   :destroy
+                                   foreign_key: "follower_id",                  # 外部キーは外部に紐づくキー、userテーブルのidに紐づく、active_relationshipsメソッドを使うと、外部キーにインスタンスのuser_idをもつ行のみをSELECTする
+                                   dependent:   :destroy                        # userが削除されたらrelationshipも削除される
   has_many :passive_relationships, class_name:  "Relationship",
                                    foreign_key: "followed_id",
                                    dependent:   :destroy
-  has_many :following, through: :active_relationships,  source: :followed
+  has_many :following, through: :active_relationships,  source: :followed       # :source following配列の元はfollowingidの集合である（チュートリアル） followed_idに紐づいたuser
   has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
@@ -84,17 +84,17 @@ class User < ApplicationRecord
     following_ids = "SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+                     OR user_id = :user_id", user_id: id)       # id = current_userのid
   end
 
   # ユーザーをフォローする
    def follow(other_user)
-     following << other_user    # followiong配列の最後にother_userを追加 #followingは関連付けに関連付けにより使用できる
+     following << other_user    # followiong配列の最後にother_userを追加 #followingは関連付けにより使用できる
    end
 
    # ユーザーをフォロー解除する
    def unfollow(other_user)
-     active_relationships.find_by(followed_id: other_user.id).destroy
+     active_relationships.find_by(followed_id: other_user.id).destroy           #active_relationshipsメソッドは、selfにかかるインスタンスメソッド
    end
 
    # 現在のユーザーがフォローしてたらtrueを返す
